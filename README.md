@@ -36,3 +36,32 @@ Para garantir a segurança dos seus dados, o robô lê as credenciais de um arqu
 ```env
 login=SEU_USUARIO_AQUI
 senha=SUA_SENHA_AQUI
+```
+
+## ⚙️ Ajustando Datas e Instância
+
+Antes de rodar a automação, se precisar mudar o período ou a loja, edite o arquivo **`abrirlinks.py`**. Vá até o final do código, na seção `if __name__ == "__main__":`:
+
+```python
+    nome_da_instancia = ''                # Instância
+    mes_do_relatorio = 12                 # Mês
+    ano_do_relatorio = 2025               # Ano
+    primeirodia = 1                       # Dia inicial
+    ultimodia = 22                        # Dia final
+```
+
+## ▶️ Como Rodar a Automação
+
+Com as bibliotecas instaladas (via `.bat`) e o `.env` configurado:
+
+1. Abra o terminal na pasta do arquivo (ou use seu editor de código).
+2. Execute o comando:
+
+```bash
+python abrirlinks.py
+```
+
+## ⚠️ Observações Importantes
+
+* **Não apague o `.env`**: Sem ele, o robô não conseguirá fazer login.
+* **Conflito de Drivers**: O arquivo `chrome.exe` na pasta sugere uma versão específica do navegador/driver. Se o script der erro ao abrir o Chrome, verifique se a versão instalada no seu PC é compatível com este arquivo.
