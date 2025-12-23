@@ -7,17 +7,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def abrir_relatorios_e_clicar_botoes(instancia, mes, ano):
-    """
-    Constrói e abre URLs de relatório em novas guias para cada dia,
-    e tenta clicar em botões específicos em cada página.
-
-    Args:
-        instancia (str): O nome da instância.
-        mes (int): O mês do relatório.
-        ano (int): O ano do relatório.
-    """
-    print(f"Iniciando a automação para a instância: '{instancia}'")
+def abrir_relatorios_e_clicar_botoes(instancia, mes, ano, primeiro_dia, ultimo_dia):
+    print(f"Iniciando a automação de emissão de notas para a instância: '{instancia}' para a data {primeiro_dia}/{mes}/{ano} até a data {ultimo_dia}/{mes}/{ano}")
 
     # --- Configuração do WebDriver ---
     service = Service()
@@ -32,19 +23,8 @@ def abrir_relatorios_e_clicar_botoes(instancia, mes, ano):
     # URL base para a qual o script irá navegar
     url_base = f"https://{instancia}.vucasolution.com.br/retaguarda/pg_financeiro_fiscal_nfce_delivery.php?csv=0&datahora_inicio={{:02d}}%2F{mes:02d}%2F{ano}+00%3A00&datahora_fim={{:02d}}%2F{mes:02d}%2F{ano}+23%3A59&data_tipo=data&id_canal=&id_formapagamento=&id_status=aguardando&nfce="
     
-    # --- Lógica de Geração de Datas ---
-    if mes in [4, 6, 9, 11]:
-        dias_no_mes = 30
-    elif mes == 2:
-        if (ano % 4 == 0 and ano % 100 != 0) or (ano % 400 == 0):
-            dias_no_mes = 29
-        else:
-            dias_no_mes = 28
-    else:
-        dias_no_mes = 31
-    
     # --- Loop de Navegação e Automação ---
-    for dia in range(1, dias_no_mes + 1):
+    for dia in range(primeiro_dia, ultimo_dia + 1):
         url_completa = url_base.format(dia, dia)
         
         print(f"Navegando para o dia {dia:02d}...")
@@ -57,7 +37,7 @@ def abrir_relatorios_e_clicar_botoes(instancia, mes, ano):
         
         driver.get(url_completa)
         
-        # --- Lógica do Atraso de 15 segundos para o Login ---
+        # --- Lógica do Atraso para o Login ---
         if dia == 1:
             time.sleep(2)
             botao_nao_autenticado = driver.find_element(By.CLASS_NAME, "confirm")
@@ -108,5 +88,7 @@ if __name__ == "__main__":
     nome_da_instancia = 'urbanossmashburg' 
     mes_do_relatorio = 12
     ano_do_relatorio = 2025      
+    primeirodia = 1
+    ultimodia = 22
 
-    abrir_relatorios_e_clicar_botoes(nome_da_instancia, mes_do_relatorio, ano_do_relatorio)
+    abrir_relatorios_e_clicar_botoes(nome_da_instancia, mes_do_relatorio, ano_do_relatorio, primeirodia, ultimodia)
