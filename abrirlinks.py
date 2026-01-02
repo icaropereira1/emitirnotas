@@ -38,7 +38,7 @@ def abrir_relatorios_e_clicar_botoes(instancia, mes, ano, primeiro_dia, ultimo_d
         driver.get(url_completa)
         
         # --- Lógica do Atraso para o Login ---
-        if dia == 1:
+        if dia == primeiro_dia:
             time.sleep(2)
             botao_nao_autenticado = driver.find_element(By.CLASS_NAME, "confirm")
             botao_nao_autenticado.click()
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     nome_da_instancia = 'urbanossmashburg' 
     mes_do_relatorio = 12
     ano_do_relatorio = 2025      
-    primeirodia = 1
-    ultimodia = 22
+    primeirodia = 15
+    ultimodia = 29
 
     abrir_relatorios_e_clicar_botoes(nome_da_instancia, mes_do_relatorio, ano_do_relatorio, primeirodia, ultimodia)
